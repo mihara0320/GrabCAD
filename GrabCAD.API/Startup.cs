@@ -25,6 +25,15 @@ namespace GrabCAD.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSignalR();
+            services.AddCors(options => options.AddPolicy("CorsPolicy", builder =>
+            {
+                builder
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials()
+                    .WithOrigins("http://localhost:4200");
+            }));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
@@ -40,7 +49,10 @@ namespace GrabCAD.API
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
+            app.UseCors("CorsPolicy");
+            app.UseSignalR((options) => {
+                //options.MapHub<ValuesHub>("/Hubs/Values");
+            });
             app.UseHttpsRedirection();
             app.UseMvc();
         }
