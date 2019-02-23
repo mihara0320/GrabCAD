@@ -1,0 +1,13 @@
+version: '3.4'
+
+services:
+  grabcad.api:
+    image: ${DOCKER_REGISTRY-}grabcadapi
+    build:
+      context: .
+      dockerfile: GrabCAD.API/Dockerfile
+
+  grabcad.cache:
+    image: "redis"
+    ports:
+      - "6379:6379"

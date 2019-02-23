@@ -5,14 +5,14 @@ EXPOSE 443
 
 FROM microsoft/dotnet:2.2-sdk AS build
 WORKDIR /src
-COPY ["GrabCAD.API/GrabCAD.API.csproj", "GrabCAD.API/"]
-RUN dotnet restore "GrabCAD.API/GrabCAD.API.csproj"
+COPY GrabCAD.API/GrabCAD.API.csproj GrabCAD.API/
+RUN dotnet restore GrabCAD.API/GrabCAD.API.csproj
 COPY . .
-WORKDIR "/src/GrabCAD.API"
-RUN dotnet build "GrabCAD.API.csproj" -c Release -o /app
+WORKDIR /src/GrabCAD.API
+RUN dotnet build GrabCAD.API.csproj -c Release -o /app
 
 FROM build AS publish
-RUN dotnet publish "GrabCAD.API.csproj" -c Release -o /app
+RUN dotnet publish GrabCAD.API.csproj -c Release -o /app
 
 FROM base AS final
 WORKDIR /app
