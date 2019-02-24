@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using GrabCAD.API.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -34,6 +35,10 @@ namespace GrabCAD.API
                     .AllowCredentials()
                     .WithOrigins("http://localhost:4200");
             }));
+
+            IoC.Configuration.Init(services);
+
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
@@ -51,7 +56,7 @@ namespace GrabCAD.API
             }
             app.UseCors("CorsPolicy");
             app.UseSignalR((options) => {
-                //options.MapHub<ValuesHub>("/Hubs/Values");
+                options.MapHub<GameHub>("/Hubs/Game");
             });
             app.UseHttpsRedirection();
             app.UseMvc();
