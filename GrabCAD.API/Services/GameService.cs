@@ -23,13 +23,11 @@ namespace GrabCAD.API.Services
     {
         private readonly IHubContext<GameHub, IGameHubClient> _context;
         private readonly IAnswerManager _answerManager;
-        private readonly IUserManager _userManager;
 
-        public GameService(IHubContext<GameHub, IGameHubClient> context, IAnswerManager answerManager, IUserManager userManager)
+        public GameService(IHubContext<GameHub, IGameHubClient> context, IAnswerManager answerManager)
         {
             _context = context;
             _answerManager = answerManager;
-            _userManager = userManager;
         }
 
 
@@ -39,8 +37,7 @@ namespace GrabCAD.API.Services
             {
                 _answerManager.Add(model);
                 await _context.Clients.All.RecieveAnswer(model);
-       
-                return new StatusCodeResult(200);
+                return new StatusCodeResult(202);
             }
             catch (Exception ex)
             {
@@ -62,11 +59,12 @@ namespace GrabCAD.API.Services
             }
         }
 
-        public ActionResult<HashSet<string>> GetPlayers()
+        public ActionResult<string> GetNewChallge()
         {
             try
             {
-                var result = _userManager.GetAll();
+                MathChallenge mathChallenge = MathChallengeGenerator.GenerateMathChallenge();
+                var result = mathChallenge.Challenge;
                 return new OkObjectResult(result);
             }
             catch (Exception ex)

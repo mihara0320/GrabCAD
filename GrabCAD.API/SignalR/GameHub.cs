@@ -13,6 +13,7 @@ namespace GrabCAD.API.Services
     {
         Task RecieveAnswer(AnswerViewModel model);
     }
+
     public class GameHub : Hub<IGameHubClient>
     {
         private IUserManager _userManager;

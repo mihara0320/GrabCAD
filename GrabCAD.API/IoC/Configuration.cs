@@ -12,7 +12,9 @@ namespace GrabCAD.API.IoC
     {
         public static void Init(IServiceCollection services)
         {
-            services.AddSingleton<IGameService, GameService>();
+            services.AddScoped<IPlayerService, PlayerService>();
+            services.AddScoped<IGameService, GameService>();
+   
             services.AddSingleton<IUserManager, UserManager>();
             services.AddSingleton<IAnswerManager, AnswerManager>();
         }

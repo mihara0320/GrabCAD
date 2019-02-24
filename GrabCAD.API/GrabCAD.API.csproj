@@ -16,8 +16,4 @@
     <PackageReference Include="StackExchange.Redis" Version="2.0.519" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Helpers\" />
-  </ItemGroup>
-
 </Project>
