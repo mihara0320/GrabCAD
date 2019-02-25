@@ -1,4 +1,6 @@
-﻿using GrabCAD.API.ViewModels;
+﻿using GrabCAD.API.Exceptions;
+using GrabCAD.API.Models;
+using GrabCAD.API.ViewModels;
 using System;
 
 using System.Collections.Generic;
@@ -9,21 +11,48 @@ namespace GrabCAD.API.Helpers
 {
     public interface IAnswerManager
     {
-        void Add(AnswerViewModel model);
+        AnswerViewModel AnswerChallenge(AnswerViewModel model);
         IEnumerable<AnswerViewModel> GetAll();
+        void SetMathChallenge(MathChallenge challenge);
     }
     public class AnswerManager : IAnswerManager
     {
-        private Stack<AnswerViewModel> AnswerStack = new Stack<AnswerViewModel>();
+        private readonly Stack<AnswerViewModel> _answerStack = new Stack<AnswerViewModel>();
+        private MathChallenge _mathChallenge;
 
-        public void Add(AnswerViewModel model)
+        public AnswerViewModel AnswerChallenge(AnswerViewModel model)
         {
-            AnswerStack.Push(model);
+            if(_mathChallenge == null)
+            {
+                throw new MathChallengeNotSetException("Math challenge is not set");
+            }
+
+            var playerAnswered = _answerStack.Any(o => o.ConnectionId == model.ConnectionId );
+            if (playerAnswered)
+            {
+                throw new PlayerHasAnswerException("Player already answered");
+            }
+
+            model.CorrectAnswer = _mathChallenge.Answer == model.Answer;
+     
+            if (!_mathChallenge.AnswerFound && model.CorrectAnswer)
+            {
+                _mathChallenge.AnswerFound = true;
+                model.FirstCorrectAnswer = true;
+            }
+ 
+            _answerStack.Push(model);
+            return model;
         }
 
         public IEnumerable<AnswerViewModel> GetAll()
         {
-            return AnswerStack.ToList();
+            return _answerStack.ToList();
+        }
+
+        public void SetMathChallenge(MathChallenge challenge)
+        {
+            _mathChallenge = challenge;
         }
     }
 }
