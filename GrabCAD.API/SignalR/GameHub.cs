@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using GrabCAD.API.Exceptions;
 using GrabCAD.API.Helpers;
 using GrabCAD.API.Models;
 using GrabCAD.API.ViewModels;
@@ -11,16 +12,19 @@ namespace GrabCAD.API.Services
 {
     public interface IGameHubClient
     {
-        Task RecieveAnswer(AnswerViewModel model);
+        Task AnswerRecieved(AnswerViewModel model);
+        Task AnswerFound(AnswerViewModel model);
+        Task PlayerUpdate(int connections);
+        //Task RequestNextChallenge();
     }
 
     public class GameHub : Hub<IGameHubClient>
     {
-        private IUserManager _userManager;
+        private readonly IPlayerManager _playerManager;
 
-        public GameHub(IUserManager userManager)
+        public GameHub(IPlayerManager playerManager)
         {
-            _userManager = userManager;
+            _playerManager = playerManager;
         }
 
         public string GetConnectionId()
@@ -28,15 +32,21 @@ namespace GrabCAD.API.Services
             return Context.ConnectionId;
         }
 
+        public int GetConnectionCount()
+        {
+            return _playerManager.GetAll().Count;
+        }
+        
         public override Task OnConnectedAsync()
         {
-            _userManager.Add(Context.ConnectionId);
+            base.Clients.All.PlayerUpdate(_playerManager.GetAll().Count);
             return base.OnConnectedAsync();
         }
 
         public override Task OnDisconnectedAsync(Exception exception)
         {
-            _userManager.Remove(Context.ConnectionId);
+            _playerManager.RemovePlayer(Context.ConnectionId);
+            base.Clients.All.PlayerUpdate(_playerManager.GetAll().Count);
             return base.OnDisconnectedAsync(exception);
         }
     }
