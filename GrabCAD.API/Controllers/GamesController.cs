@@ -21,6 +21,13 @@ namespace GrabCAD.API.Controllers
             _gameService = gameService;
         }
 
+        [HttpGet("challenge")]
+        public ActionResult<string> GetChallenge()
+        {
+            var result = _gameService.GetNewChallge();
+            return result;
+        }
+
         [HttpGet("answers")]
         public ActionResult<IEnumerable<AnswerViewModel>> GetAnswers()
         {
@@ -29,7 +36,7 @@ namespace GrabCAD.API.Controllers
         }
 
         [HttpPost("answers")]
-        public async Task<IActionResult> Post([FromBody] AnswerViewModel model)
+        public async Task<ActionResult> Post([FromBody] AnswerViewModel model)
         {
             var result = await _gameService.AddAnswerAsync(model);
             return result;
