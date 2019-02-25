@@ -12,6 +12,9 @@ namespace GrabCAD.API.ViewModels
         public string ConnectionId { get; set; }
 
         [Required(ErrorMessage = "Answer is required")]
-        public int Answer { get; set; }
+        public bool Answer { get; set; }
+
+        public bool FirstCorrectAnswer { get; set; } = false;
+        public bool CorrectAnswer { get; set; } = false;
     }
 }
