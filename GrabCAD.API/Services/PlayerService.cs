@@ -14,28 +14,63 @@ namespace GrabCAD.API.Services
 {
     public interface IPlayerService
     {
-        ActionResult<HashSet<string>> GetPlayers();
+        ActionResult<IDictionary<string, int>> GetPlayers();
+        ActionResult AddPlayer(string connectionId);
+        ActionResult RemovePlayer(string connectionId);
     }
 
     public class PlayerService : IPlayerService
     {
-        private readonly IUserManager _userManager;
+        private readonly IHubContext<GameHub, IGameHubClient> _context;
+        private readonly IPlayerManager _playerManager;
 
-        public PlayerService(IUserManager userManager)
+        public PlayerService(
+            IHubContext<GameHub, IGameHubClient> context, 
+            IPlayerManager playerManager
+            )
         {
-            _userManager = userManager;
+            _context = context;
+            _playerManager = playerManager;
         }
 
-        public ActionResult<HashSet<string>> GetPlayers()
+        public ActionResult<IDictionary<string, int>> GetPlayers()
         {
             try
             {
-                var result = _userManager.GetAll();
+                var result = _playerManager.GetAll();
                 return new OkObjectResult(result);
             }
             catch (Exception ex)
             {
                 return new StatusCodeResult(500);
+            }
+        }
+
+        public ActionResult AddPlayer(string connectionId)
+        {
+            try
+            {
+                _playerManager.AddPlayer(connectionId);
+                _context.Clients.All.PlayerUpdate(_playerManager.GetAll().Count);
+                return new StatusCodeResult(202);
+            }
+            catch (Exception ex)
+            {
+                return new BadRequestObjectResult(ex.Message);
+            }
+        }
+
+        public ActionResult RemovePlayer(string connectionId)
+        {
+            try
+            {
+                _playerManager.RemovePlayer(connectionId);
+                _context.Clients.All.PlayerUpdate(_playerManager.GetAll().Count);
+                return new StatusCodeResult(202);
+            }
+            catch (Exception ex)
+            {
+                return new BadRequestObjectResult(ex.Message);
             }
         }
     }
