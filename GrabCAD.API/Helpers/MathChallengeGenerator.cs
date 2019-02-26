@@ -46,15 +46,18 @@ namespace GrabCAD.API.Helpers
             var mathChallegeString = $"{o1} {operatorString} {o2} = {potentialAnswer}";
 
 
+            return ComposeMathChallenge(mathChallegeString, potentialAnswer, correctAnswer);
+        }
+
+        public static MathChallenge ComposeMathChallenge(string mathChallenge, int potentialAnswer, int correctAnswer)
+        {
             return new MathChallenge()
             {
-                Challenge = mathChallegeString,
+                Challenge = mathChallenge,
                 PotentialAnswer = potentialAnswer,
                 CorrectAnswer = correctAnswer,
                 Answer = correctAnswer == potentialAnswer
             };
-
-
         }
     }
 }
