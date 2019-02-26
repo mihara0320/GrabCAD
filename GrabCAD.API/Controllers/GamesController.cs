@@ -1,12 +1,9 @@
-﻿using System;
+﻿
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using GrabCAD.API.Helpers;
 using GrabCAD.API.Services;
 using GrabCAD.API.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SignalR;
 
 namespace GrabCAD.API.Controllers
 {

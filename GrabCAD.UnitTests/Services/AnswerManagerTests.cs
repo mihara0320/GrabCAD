@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using GrabCAD.API.Exceptions;
 using GrabCAD.API.Helpers;
 using GrabCAD.API.Models;

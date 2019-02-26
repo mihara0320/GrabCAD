@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using GrabCAD.API.Exceptions;
-using Microsoft.EntityFrameworkCore.Migrations.Operations;
 
 
 namespace GrabCAD.API.Helpers

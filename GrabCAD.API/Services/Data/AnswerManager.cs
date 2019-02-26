@@ -1,11 +1,8 @@
 ﻿using GrabCAD.API.Exceptions;
 using GrabCAD.API.Models;
 using GrabCAD.API.ViewModels;
-using System;
-
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace GrabCAD.API.Helpers
 {

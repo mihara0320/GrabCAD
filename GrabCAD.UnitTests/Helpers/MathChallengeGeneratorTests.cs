@@ -1,5 +1,4 @@
-﻿using System;
-using GrabCAD.API.Helpers;
+﻿using GrabCAD.API.Helpers;
 using GrabCAD.API.Models;
 using Xunit;
 

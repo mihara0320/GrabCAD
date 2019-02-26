@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using GrabCAD.API.Exceptions;
 using GrabCAD.API.Helpers;
 using Xunit;
