@@ -16,7 +16,6 @@ namespace GrabCAD.API.Services
     {
         Task<ActionResult> AddAnswerAsync(AnswerViewModel model);
         ActionResult<IEnumerable<AnswerViewModel>> GetAnswers();
-        ActionResult<string> GetNewChallge();
     }
 
     public class GameService: IGameService
@@ -47,12 +46,15 @@ namespace GrabCAD.API.Services
                 {
                     _playerManager.UpdateScore(model.ConnectionId, -1);
                 }
+                await _context.Clients.All.AnswerRecieved(resultModel);
+
                 if (resultModel.FirstCorrectAnswer)
                 {
                     _playerManager.UpdateScore(model.ConnectionId, 1);
                     await _context.Clients.All.AnswerFound(resultModel);
-                }
-                await _context.Clients.All.AnswerRecieved(resultModel);
+                    await Task.Delay(5000);
+                    await _context.Clients.All.ChallengeUpdate(GetNewChallge());
+                }           
                 return new OkObjectResult(202);
             }
             catch (Exception ex)
@@ -74,19 +76,11 @@ namespace GrabCAD.API.Services
             }
         }
 
-        public ActionResult<string> GetNewChallge()
+        private string GetNewChallge()
         {
-            try
-            {
-                MathChallenge mathChallenge = MathChallengeGenerator.GenerateMathChallenge();
-                _answerManager.SetMathChallenge(mathChallenge);
-                var result = mathChallenge.Challenge;
-                return new JsonResult(result);
-            }
-            catch (Exception ex)
-            {
-                return new StatusCodeResult(500);
-            }
+            MathChallenge mathChallenge = MathChallengeGenerator.GenerateMathChallenge();
+            _answerManager.SetMathChallenge(mathChallenge);
+            return mathChallenge.Challenge;
         }
     }
 }

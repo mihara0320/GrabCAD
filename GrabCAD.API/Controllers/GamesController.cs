@@ -21,13 +21,6 @@ namespace GrabCAD.API.Controllers
             _gameService = gameService;
         }
 
-        [HttpGet("challenge")]
-        public ActionResult<string> GetChallenge()
-        {
-            var result = _gameService.GetNewChallge();
-            return result;
-        }
-
         [HttpGet("answers")]
         public ActionResult<IEnumerable<AnswerViewModel>> GetAnswers()
         {

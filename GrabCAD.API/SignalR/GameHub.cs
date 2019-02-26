@@ -15,16 +15,19 @@ namespace GrabCAD.API.Services
         Task AnswerRecieved(AnswerViewModel model);
         Task AnswerFound(AnswerViewModel model);
         Task PlayerUpdate(int connections);
+        Task ChallengeUpdate(string challege);
         //Task RequestNextChallenge();
     }
 
     public class GameHub : Hub<IGameHubClient>
     {
         private readonly IPlayerManager _playerManager;
+        private readonly IAnswerManager _answerManager;
 
-        public GameHub(IPlayerManager playerManager)
+        public GameHub(IPlayerManager playerManager, IAnswerManager answerManager)
         {
             _playerManager = playerManager;
+            _answerManager = answerManager;
         }
 
         public string GetConnectionId()
@@ -32,11 +35,12 @@ namespace GrabCAD.API.Services
             return Context.ConnectionId;
         }
 
-        public int GetConnectionCount()
+        public Task RequestNextChallenge()
         {
-            return _playerManager.GetAll().Count;
+            MathChallenge mathChallenge = MathChallengeGenerator.GenerateMathChallenge();
+            _answerManager.SetMathChallenge(mathChallenge);
+            return Clients.All.ChallengeUpdate(mathChallenge.Challenge);
         }
-        
         public override Task OnConnectedAsync()
         {
             base.Clients.All.PlayerUpdate(_playerManager.GetAll().Count);
