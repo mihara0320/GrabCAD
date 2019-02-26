@@ -53,6 +53,7 @@ namespace GrabCAD.API.Helpers
         public void SetMathChallenge(MathChallenge challenge)
         {
             _mathChallenge = challenge;
+            _answerStack.Clear();
         }
     }
 }
