@@ -41,16 +41,14 @@ namespace GrabCAD.API.Services
             try
             {
                 var resultModel = _answerManager.AnswerChallenge(model);
-
-                if (!resultModel.CorrectAnswer)
-                {
-                    _playerManager.UpdateScore(model.ConnectionId, -1);
-                }
+         
+                updateScore(resultModel);
+     
                 await _context.Clients.All.AnswerRecieved(resultModel);
+                await _context.Clients.All.ScoreUpdate(_playerManager.GetScores());
 
                 if (resultModel.FirstCorrectAnswer)
                 {
-                    _playerManager.UpdateScore(model.ConnectionId, 1);
                     await _context.Clients.All.AnswerFound(resultModel);
                     await Task.Delay(5000);
                     await _context.Clients.All.ChallengeUpdate(GetNewChallge());
@@ -73,6 +71,19 @@ namespace GrabCAD.API.Services
             catch (Exception ex)
             {
                 return new StatusCodeResult(500);
+            }
+        }
+
+        private void updateScore(AnswerViewModel model)
+        {
+            if (model.FirstCorrectAnswer)
+            {
+                _playerManager.UpdateScore(model.ConnectionId, 1);
+            }
+
+            if (!model.CorrectAnswer)
+            {
+                _playerManager.UpdateScore(model.ConnectionId, -1);
             }
         }
 

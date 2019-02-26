@@ -16,6 +16,7 @@ namespace GrabCAD.API.Services
         Task AnswerFound(AnswerViewModel model);
         Task PlayerUpdate(int connections);
         Task ChallengeUpdate(string challege);
+        Task ScoreUpdate(List<KeyValuePair<string, int>> scores);
         //Task RequestNextChallenge();
     }
 
@@ -43,14 +44,14 @@ namespace GrabCAD.API.Services
         }
         public override Task OnConnectedAsync()
         {
-            base.Clients.All.PlayerUpdate(_playerManager.GetAll().Count);
+            base.Clients.All.PlayerUpdate(_playerManager.GetScores().Count);
             return base.OnConnectedAsync();
         }
 
         public override Task OnDisconnectedAsync(Exception exception)
         {
             _playerManager.RemovePlayer(Context.ConnectionId);
-            base.Clients.All.PlayerUpdate(_playerManager.GetAll().Count);
+            base.Clients.All.PlayerUpdate(_playerManager.GetScores().Count);
             return base.OnDisconnectedAsync(exception);
         }
     }

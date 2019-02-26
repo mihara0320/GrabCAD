@@ -37,7 +37,7 @@ namespace GrabCAD.API.Services
         {
             try
             {
-                var result = _playerManager.GetAll();
+                var result = _playerManager.GetScores();
                 return new OkObjectResult(result);
             }
             catch (Exception ex)
@@ -51,7 +51,7 @@ namespace GrabCAD.API.Services
             try
             {
                 _playerManager.AddPlayer(connectionId);
-                _context.Clients.All.PlayerUpdate(_playerManager.GetAll().Count);
+                _context.Clients.All.PlayerUpdate(_playerManager.GetScores().Count);
                 return new StatusCodeResult(202);
             }
             catch (Exception ex)
@@ -65,7 +65,7 @@ namespace GrabCAD.API.Services
             try
             {
                 _playerManager.RemovePlayer(connectionId);
-                _context.Clients.All.PlayerUpdate(_playerManager.GetAll().Count);
+                _context.Clients.All.PlayerUpdate(_playerManager.GetScores().Count);
                 return new StatusCodeResult(202);
             }
             catch (Exception ex)

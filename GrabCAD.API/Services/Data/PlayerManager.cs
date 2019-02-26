@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using GrabCAD.API.Exceptions;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
 
@@ -11,7 +12,7 @@ namespace GrabCAD.API.Helpers
         void AddPlayer(string id);
         void RemovePlayer(string id);
         void UpdateScore(string id, int score);
-        IDictionary<string, int> GetAll();
+        List<KeyValuePair<string, int>> GetScores();
     }
 
     public class PlayerManager : IPlayerManager
@@ -49,9 +50,9 @@ namespace GrabCAD.API.Helpers
             PlayerScores[id] = newScore > 0 ? newScore : 0;
         }
 
-        public IDictionary<string, int> GetAll()
+        public List<KeyValuePair<string, int>> GetScores()
         {
-            return PlayerScores;
+            return PlayerScores.ToList();
         }
     }
 }
