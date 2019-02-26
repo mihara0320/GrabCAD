@@ -14,6 +14,7 @@ namespace GrabCAD.API.Helpers
         AnswerViewModel AnswerChallenge(AnswerViewModel model);
         IEnumerable<AnswerViewModel> GetAll();
         void SetMathChallenge(MathChallenge challenge);
+        MathChallenge GetMathChallenge();
     }
     public class AnswerManager : IAnswerManager
     {
@@ -54,6 +55,15 @@ namespace GrabCAD.API.Helpers
         {
             _mathChallenge = challenge;
             _answerStack.Clear();
+        }
+
+        public MathChallenge GetMathChallenge()
+        {
+            if (_mathChallenge == null)
+            {
+                throw new MathChallengeNotSetException("Math challenge is not set");
+            }
+            return _mathChallenge;
         }
     }
 }
