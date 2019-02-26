@@ -79,7 +79,7 @@ namespace GrabCAD.UnitTests.Services
         }
 
         [Fact]
-        public void Throws_MathChallengeNotSetException_on_GetMathChallenge()
+        public void Throws_exception_on_get_method_when_challenge_is_not_set()
         {
             var service = new AnswerManager();
             var ex = Assert.Throws<MathChallengeNotSetException>(() => service.GetMathChallenge());
@@ -87,7 +87,7 @@ namespace GrabCAD.UnitTests.Services
         }
 
         [Fact]
-        public void Throws_MathChallengeNotSetException_on_AnswerChallenge()
+        public void Throws_exception_on_answer_attempt_when_challenge_is_not_set()
         {
             var service = new AnswerManager();
             var ex = Assert.Throws<MathChallengeNotSetException> (() => service.AnswerChallenge(_answer));
@@ -95,7 +95,7 @@ namespace GrabCAD.UnitTests.Services
         }
 
         [Fact]
-        public void Throws_PlayerHasAnswerException_on_AnswerChallenge()
+        public void Throws_exception_when_user_has_already_answered_challenge()
         {
             var service = new AnswerManager();
             var challenge = MathChallengeGenerator.GenerateMathChallenge();
