@@ -5,7 +5,7 @@
     <DockerTargetOS>Linux</DockerTargetOS>
     <ProjectGuid>09750e6e-9866-416a-a702-d241db2a7da6</ProjectGuid>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
-    <DockerServiceUrl>{Scheme}://localhost:{ServicePort}/api/values</DockerServiceUrl>
+    <DockerServiceUrl>{Scheme}://localhost:{ServicePort}/api/default</DockerServiceUrl>
     <DockerServiceName>grabcad.api</DockerServiceName>
   </PropertyGroup>
   <ItemGroup>

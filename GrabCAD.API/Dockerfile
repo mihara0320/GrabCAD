@@ -14,6 +14,10 @@ RUN dotnet build GrabCAD.API.csproj -c Release -o /app
 FROM build AS publish
 RUN dotnet publish GrabCAD.API.csproj -c Release -o /app
 
+FROM build AS testrunner
+WORKDIR /src/GrabCAD.UnitTests
+RUN dotnet test GrabCAD.UnitTests.csproj --logger:trx
+
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app .
