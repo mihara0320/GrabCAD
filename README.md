@@ -30,7 +30,7 @@ Open the link below for the game Fron-tend
 ```bash
 http://localhost:4200
 ```
-Back-end API can is exposed to
+Back-end API is exposed to
 ```bash
 https://localhost:44319/api
 ```
