@@ -6,3 +6,19 @@ services:
     build:
       context: .
       dockerfile: GrabCAD.API/Dockerfile
+    networks:
+      - app-network
+
+  grabcad.client:
+    image: ${DOCKER_REGISTRY-}grabcadclient
+    build:
+      context: GrabCAD.Client
+      dockerfile: ./Dockerfile
+    ports:
+      - "4200:80"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
