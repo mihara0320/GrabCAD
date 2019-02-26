@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.421
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GrabCAD.API", "GrabCAD.API\GrabCAD.API.csproj", "{4456E2BD-D02B-4805-9323-46390FD81CF8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GrabCAD.API", "GrabCAD.API\GrabCAD.API.csproj", "{4456E2BD-D02B-4805-9323-46390FD81CF8}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{09750E6E-9866-416A-A702-D241DB2A7DA6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GrabCAD.UnitTests", "GrabCAD.UnitTests\GrabCAD.UnitTests.csproj", "{CE6DD485-7247-4417-9FCC-4F4DB22842C6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{09750E6E-9866-416A-A702-D241DB2A7DA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{09750E6E-9866-416A-A702-D241DB2A7DA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{09750E6E-9866-416A-A702-D241DB2A7DA6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE6DD485-7247-4417-9FCC-4F4DB22842C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE6DD485-7247-4417-9FCC-4F4DB22842C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE6DD485-7247-4417-9FCC-4F4DB22842C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE6DD485-7247-4417-9FCC-4F4DB22842C6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
