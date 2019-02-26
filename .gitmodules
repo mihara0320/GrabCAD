@@ -1,0 +1,3 @@
+[submodule "GrabCAD.Client"]
+	path = GrabCAD.Client
+	url = https://github.com/mihara0320/GrabCAD.Client.git
