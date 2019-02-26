@@ -45,7 +45,8 @@ namespace GrabCAD.API.Helpers
 
         public void UpdateScore(string id, int score)
         {
-            PlayerScores[id] = PlayerScores[id] + score;
+            var newScore = PlayerScores[id] + score;
+            PlayerScores[id] = newScore > 0 ? newScore : 0;
         }
 
         public IDictionary<string, int> GetAll()
