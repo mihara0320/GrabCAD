@@ -26,7 +26,7 @@ docker-compose up
 ```
 
 ## Useage
-Open the link below for the game Fron-tend
+Open the link below for the game Front-end
 ```bash
 http://localhost:4200
 ```
