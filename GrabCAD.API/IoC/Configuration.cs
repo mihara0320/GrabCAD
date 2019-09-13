@@ -10,7 +10,8 @@ namespace GrabCAD.API.IoC
         {
             services.AddScoped<IPlayerService, PlayerService>();
             services.AddScoped<IGameService, GameService>();
-   
+            services.AddScoped<IAuthenticationService, AuthenticationService>();
+            
             services.AddSingleton<IPlayerManager, PlayerManager>();
             services.AddSingleton<IAnswerManager, AnswerManager>();
         }

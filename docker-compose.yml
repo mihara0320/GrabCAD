@@ -1,24 +1,42 @@
 version: '3.4'
 
 services:
-  grabcad.api:
-    image: ${DOCKER_REGISTRY-}grabcadapi
+  backend-node1:
+    # image: ${DOCKER_REGISTRY-}game-server
+    container_name: math-backend-node1
     build:
       context: .
       dockerfile: GrabCAD.API/Dockerfile
-    networks:
-      - app-network
+    environment: 
+      - ASPNETCORE_ENVIRONMENT=DevDocker
+  
+  backend-node2:
+    # image: ${DOCKER_REGISTRY-}game-server
+    container_name: math-backend-node2
+    build:
+      context: .
+      dockerfile: GrabCAD.API/Dockerfile  
+    environment: 
+      - ASPNETCORE_ENVIRONMENT=DevDocker
 
-  grabcad.client:
-    image: ${DOCKER_REGISTRY-}grabcadclient
+  frontend:
+    # image: ${DOCKER_REGISTRY-}math-frontend
+    container_name: math-frontend
     build:
       context: GrabCAD.Client
       dockerfile: ./Dockerfile
+    # ports:
+    #   - 8080:80
+  
+  nginx:
+    image: nginx:mainline-alpine
+    container_name: math-nginx
+    restart: unless-stopped
     ports:
-      - "4200:80"
-    networks:
-      - app-network
-
-networks:
-  app-network:
-    driver: bridge
+      - 80:80
+    volumes:
+      - ./nginx:/etc/nginx
+    depends_on:
+      - backend-node1
+      - backend-node2
+      - frontend
